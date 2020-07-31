@@ -1,23 +1,28 @@
 [tool.poetry]
 name = "sigmalint"
-version = "0.1.0"
+version = "0.2.0"
 description = "A simple linter for Sigma rules"
 authors = ["Ryan Plas <ryan.plas@stage2sec.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
-click = "^7.1.2"
-pyyaml = "^5.3.1"
-pyrx = "^0.3.0"
-jsonschema = "^3.2.0"
+python = "==3.*,>=3.8.0"
+click = "==7.*,>=7.1.2"
+pyyaml = "==5.*,>=5.3.1"
+pyrx = "==0.*,>=0.3.0"
+jsonschema = "==3.*,>=3.2.0"
 
 [tool.poetry.scripts]
 sigmalint = 'sigmalint.sigmalint:cli'
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.4.3"
-pytest-cov = "^2.10.0"
+pytest = "==5.*,>=5.4.3"
+pytest-cov = "==2.*,>=2.10.0"
+
 
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
+
+[tool.dephell.main]
+from = {format = "poetry", path = "pyproject.toml"}
+to = {format = "setuppy", path = "setup.py"}
