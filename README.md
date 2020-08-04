@@ -19,8 +19,7 @@ The available methods are:
 
 ### Installing
 
-* Clone the repo locally
-* `pip install --user .`
+* pip install sigmalint
 
 ### Executing program
 
