@@ -12,12 +12,23 @@ rx = pyrx.Factory({'register_core_types': True})
 schema = rx.make_schema(rx_schema)
 
 @click.command()
-@click.option('--inputdir', type=click.Path(exists=True, file_okay=False, readable=True, resolve_path=True), help='Directory that contains Sigma yaml files.', required=True)
+@click.option('--sigmainput', type=click.Path(exists=True, file_okay=True, readable=True, resolve_path=True), help='Path to a directory that comtains Sigma files or to a single Sigma file.', required=True)
+@click.option('--directory', is_flag=True, help="Flag for if sigmainput is a directory")
 @click.option('--method', type=click.Choice(['rx', 'jsonschema', 's2'], case_sensitive=False), default='rx', help='Validation method.')
-def cli(inputdir, method):
+def cli(sigmainput, directory, method):
     results = []
-
-    filepaths = [os.path.join(dp, f) for dp, dn, fn in os.walk(os.path.expanduser(inputdir)) for f in fn]
+    filepaths = []
+    
+    if(directory):
+        print("Directory True")
+        filepaths = [os.path.join(dp, f) for dp, dn, fn in os.walk(os.path.expanduser(sigmainput)) for f in fn]
+    else:
+        seperator = '\\'
+        filepaths=[sigmainput]
+        pathParts = sigmainput.split(seperator)
+        a_filename = pathParts[-1]
+        pathParts.pop()
+        sigmainput = seperator.join(pathParts)
 
     invalid_count = 0
     unsupported_count = 0
@@ -25,7 +36,7 @@ def cli(inputdir, method):
     with click.progressbar(filepaths, label="Parsing yaml files:") as bar:
         for filename in bar:
             if filename.endswith('.yml'):
-                f = open(os.path.join(inputdir, filename), 'r')
+                f = open(os.path.join(sigmainput, filename), 'r')
                 sigma_yaml = yaml.safe_load_all(f)
                 sigma_yaml_list = list(sigma_yaml)
                 if len(sigma_yaml_list) > 1:
@@ -55,7 +66,7 @@ def cli(inputdir, method):
         if result['result'] == False:
             invalid_count = invalid_count + 1
             click.echo('========')
-            click.secho('{} is invalid:'.format(os.path.join(inputdir, result['filename'])), fg=color)
+            click.secho('{} is invalid:'.format(os.path.join(sigmainput, result['filename'])), fg=color)
             for reason in result['reasons']:
                 click.secho('\t * ' + reason, fg=color)
 
