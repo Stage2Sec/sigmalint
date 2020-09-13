@@ -28,7 +28,7 @@ The available methods are:
 Usage: sigmalint [OPTIONS]
 
 Options:
-  --sigmainput PATH            Path to a directory that comtains Sigma files or to a single Sigma file.  
+ --sigmainput PATH            Path to a directory that comtains Sigma files or to a single Sigma file.  
                                [required]
  --directory                  Flag for if sigmainput is a directory
  --method [rx|jsonschema|s2]  Validation method.
