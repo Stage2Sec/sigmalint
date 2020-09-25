@@ -7,7 +7,8 @@ A simple linter for Sigma rules
 sigmalint is a command line interface for validating Sigma rules against the Sigma schema.
 
 The available arguments are:
-* `--inputdir` - The directory where the sigma rules are located
+* `--sigmainput` - Path to a directory that comtains Sigma files or to a single Sigma file.
+* `--directory` - Flag for if sigmainput is a directory
 * `--method` - The schema validator that you wish to use (Default: rx)
 
 The available methods are:
@@ -27,11 +28,11 @@ The available methods are:
 Usage: sigmalint [OPTIONS]
 
 Options:
-  --inputdir DIRECTORY         Directory that contains Sigma yaml files.
+ --sigmainput PATH            Path to a directory that comtains Sigma files or to a single Sigma file.  
                                [required]
-
-  --method [rx|jsonschema|s2]  Validation method.
-  --help                       Show this message and exit.
+ --directory                  Flag for if sigmainput is a directory
+ --method [rx|jsonschema|s2]  Validation method.
+ --help                       Show this message and exit.
 ```
 
 ## Authors
